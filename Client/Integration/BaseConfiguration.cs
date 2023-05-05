@@ -15,5 +15,6 @@
         public List<int> RetryStatusCodes { get; set; }
 
         public int RetryFractionalDigits { get; set; } = 4;
+        public bool PropagateHeaders { get; set; }
     }
 }

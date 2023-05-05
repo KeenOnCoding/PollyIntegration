@@ -2,6 +2,6 @@
 {
     public interface ICorerouterIntegration
     {
-        Task<WeatherForecast> GetAsync(CancellationToken token);
+        Task<IEnumerable<WeatherForecast>> GetAsync(CancellationToken token);
     }
 }

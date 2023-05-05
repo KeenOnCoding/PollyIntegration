@@ -28,7 +28,7 @@
 
             if (httpClientCfg.PropagateHeaders)
             {
-                builder.AddHttpClientHeaders();
+               builder.AddHttpClientHeaders();
             }
 
             //builder.AddAudit();

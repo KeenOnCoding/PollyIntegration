@@ -27,27 +27,24 @@
             _httpClientFactory = factory;
             _policyRegistry = registry;
         }
-        public async Task<WeatherForecast> GetAsync(CancellationToken token)
+        public async Task<IEnumerable<WeatherForecast>> GetAsync(CancellationToken token)
         {
             var url = $"http://localhost:5204/WeatherForecast";
             var response = await SendRequestAsync(url, HttpMethod.Get, null, token);
 
-                var result = JsonConvert.DeserializeObject<WeatherForecast>(response);
-
-
-            return result;
+            return JsonConvert.DeserializeObject<IEnumerable<WeatherForecast>>(response); ;
         }
         private async Task<string> SendRequestAsync(string url,HttpMethod method,HttpContent content,CancellationToken token,bool isNeedValidationError = false)
         {
             using var client = _httpClientFactory.CreateClient(HttpClientKey);
 
-            //if (_cfg.DefaultHeaders != null && _cfg.DefaultHeaders.Count > 0)
-            //{
-            //    foreach (var (headerName, headerValue) in _cfg.DefaultHeaders)
-            //    {
-                    client.DefaultRequestHeaders.Add("User-Agent", "theCodeBlogger.com Demo");
-            //    }
-            //}
+            if (_cfg.DefaultHeaders != null && _cfg.DefaultHeaders.Count > 0)
+            {
+                foreach (var (headerName, headerValue) in _cfg.DefaultHeaders)
+                {
+                    client.DefaultRequestHeaders.Add(headerName, headerValue);
+                }
+            }
 
             var policy = _policyRegistry.Get<IAsyncPolicy<HttpResponseMessage>>(HttpClientKey);
 

@@ -24,12 +24,8 @@ namespace Client.Controllers
         public async Task<IActionResult> Values()
         {
             var source = new CancellationTokenSource();
-
             var result = await _corerouterIntegration.GetAsync(source.Token);
-            if (result !=null)
-            {
 
-            }
             return Ok(result);
         }
     }
